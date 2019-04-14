@@ -1,0 +1,111 @@
+@page "{id:int?}"
+@model School.UI.Pages.Teachers.IndexModel
+@{
+    ViewData["Title"] = "Teachers";
+}
+<h2>Teachers(to see the subjects and  classes taught by the teacher click "Select")</h2>
+<p>
+    <a asp-page="Create">Create New</a>, <a asp-page="/Teachers/SchoolList">School List(List of school classes and their students)</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Last Name</th>
+            <th>First Name</th>
+            <th>Position</th>
+            <th>Subjects</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Teacher.Teachers)
+        {
+            string selectedRow = "";
+            if (item.ID == (int?)ViewData["TeacherID"])
+            {
+                selectedRow = "success";
+            }
+            <tr class="@selectedRow">
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstMidName)
+                </td>
+                <td>
+                    @if (item.PositionAssignments != null)
+                    {
+                        @item.PositionAssignments.Position
+                    }
+                </td>
+                <td>
+                    @{
+                        foreach (var subject in item.SubjectAssignments)
+                        {
+                            @subject.Subject.SubjectID @:  @subject.Subject.Title <br />
+                        }
+                    }
+                </td>
+                <td>
+                    <a asp-page="./Index" asp-route-id="@item.ID">Select</a> |
+                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@if (Model.Teacher.Subjects != null)
+{
+<h3>Subjects Taught by Selected Teacher(to see students enrolled in the selected subject click "Select")</h3>
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>Number</th>
+            <th>Title</th>
+            <th>SchoolClass</th>
+        </tr>
+        @foreach (var item in Model.Teacher.Subjects)
+        {
+            string selectedRow = "";
+            if (item.SubjectID == (int?)ViewData["SubjectID"])
+            {
+                selectedRow = "success";
+            }
+            <tr class="@selectedRow">
+                <td>
+                    @Html.ActionLink("Select", "OnGetAsync", new { subjectID = item.SubjectID })
+                </td>
+                <td>
+                    @item.SubjectID
+                </td>
+                <td>
+                    @item.Title
+                </td>
+                <td>
+                    @item.SchoolClass.Name
+                </td>
+            </tr>
+        }
+    </table>
+}
+@if (Model.Teacher.Enrollments != null)
+{
+    <h3>
+        Students Enrolled in Selected Subject
+    </h3>
+    <table class="table">
+        <tr>
+            <th>Name</th>
+        </tr>
+        @foreach (var item in Model.Teacher.Enrollments)
+        {
+            <tr>
+                <td>
+                    @item.Student.FullName
+                </td>
+            </tr>
+        }
+    </table>
+}

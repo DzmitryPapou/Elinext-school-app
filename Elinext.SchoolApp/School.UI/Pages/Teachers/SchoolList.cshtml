@@ -1,0 +1,36 @@
+﻿@page
+@model School.UI.Pages.SchoolList
+
+@{
+    ViewData["Title"] = "SchoolList";
+}
+
+<h2>List of school classes and their students</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Students[0].FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Students[0].StudentsClass)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Students)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudentsClass.Name)
+                    </td>
+                </tr>
+            }
+    
+    </tbody>
+</table>

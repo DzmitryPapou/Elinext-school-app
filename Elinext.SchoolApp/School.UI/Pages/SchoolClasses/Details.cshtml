@@ -1,0 +1,31 @@
+@page
+@model School.UI.Pages.SchoolClasses.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SchoolClass</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SchoolClass.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SchoolClass.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SchoolClass.ClassTeacher)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SchoolClass.ClassTeacher.FirstMidName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.SchoolClass.SchoolClassID">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
