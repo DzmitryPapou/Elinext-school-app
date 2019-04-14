@@ -28,13 +28,6 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
-                    @*<ul class="nav navbar-nav">
-                        <li><a asp-page="/Students/Index">Students</a></li>
-                        <li><a asp-page="/Subjects/Index">Subjects</a></li>
-                        <li><a asp-page="/Teachers/Index">Teachers</a></li>
-                        <li><a asp-page="/SchoolClasses/Index">SchoolClasses</a></li>
-                    </ul>*@
-
                     <ul class="navbar-nav flex-grow-1">
                         @if (User.Identity.IsAuthenticated)
                         {
@@ -54,16 +47,6 @@
                             }
                         }
                     </ul>
-                        @*<li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-page="/Index">AdminPage</a>
-            </li>*@
-                   
                 </div>
             </div>
         </nav>
@@ -74,13 +57,6 @@
             @RenderBody()
         </main>
     </div>
-
-    @*<footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2019 - School.UI - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer>*@
-
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
