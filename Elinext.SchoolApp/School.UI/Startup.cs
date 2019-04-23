@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -7,9 +7,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using School.UI.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using School.BLL;
+using School.DAL.EF;
+using School.DAL.Entities;
+using School.DAL.Interfaces;
+using School.DAL.Repositories;
 
 namespace School.UI
 {
@@ -34,16 +38,22 @@ namespace School.UI
 
             services.AddSession();
 
-           
-            services.AddDbContext<SchoolContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+
+            var connection = Configuration.GetConnectionString("DefaultConnection");
+
+            services.AddDbContext<SchoolContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("School.DAL")));
+
+            services.AddTransient<IRepository<Student>, StudentRepository>();
+            services.AddTransient<IRepository<Subject>, SubjectRepository>();
+            services.AddTransient<IRepository<Teacher>, TeacherRepository>();
+            services.AddTransient<IRepository<SchoolClass>, SchoolClassRepository>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            
 
             services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<SchoolContext>();
-
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -55,11 +65,10 @@ namespace School.UI
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
@@ -70,13 +79,15 @@ namespace School.UI
 
             app.UseAuthentication();
             app.UseSession();
-            app.UseMvc();
-           
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
 
             CreateUserAndRoles(serviceProvider).Wait();
         }
-
-
 
         public async Task CreateUserAndRoles(IServiceProvider serviceProvider)
         {
@@ -127,9 +138,3 @@ namespace School.UI
         }
     }
 }
-
-
-
-
-
-

@@ -11,7 +11,7 @@
 using System;
 using System.Reflection;
 
-[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("aspnet-School.UI-0A2FFD1C-AD9A-4BDB-AD63-1C3F1569B18B")]
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("aspnet-School.UI-095E4A08-2885-4BD2-8EB6-F7B9D732636A")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("School.UI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]

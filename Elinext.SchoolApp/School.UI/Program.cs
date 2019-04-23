@@ -1,10 +1,9 @@
 ﻿using System;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using School.UI.Data;
+using School.DAL.EF;
 
 namespace School.UI
 {
@@ -12,7 +11,7 @@ namespace School.UI
     {
         public static void Main(string[] args)
         {
-           var host = CreateWebHostBuilder(args).Build();
+            var host = CreateWebHostBuilder(args).Build();
 
             using (var scope = host.Services.CreateScope())
             {
@@ -20,8 +19,7 @@ namespace School.UI
                 try
                 {
                     var context = services.GetRequiredService<SchoolContext>();
-                    context.Database.Migrate();
-                    DbInitializer.Initialize(context);
+                   DbInitializer.Initialize(context);
                 }
                 catch (Exception ex)
                 {
@@ -33,9 +31,9 @@ namespace School.UI
             host.Run();
         }
 
-
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();
     }
 }
+
