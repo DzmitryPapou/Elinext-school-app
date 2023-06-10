@@ -1,4 +1,4 @@
-# School App, core 2.2 mvc, ef
+# Elinext School App, core 2.2 mvc, ef
 
 The app (School)
 - Models: Students, teachers, classes
