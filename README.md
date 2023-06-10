@@ -30,6 +30,6 @@ Basic scripts and screens:
 Credentials:
 - teacher's role credentials - login : teacher@gmail.com, password : Teacher_12345  
 
-- teacher's credentials - login: admin@gmail.com, password : Admin_12345
+- administrator's credentials - login: admin@gmail.com, password : Admin_12345
 
 
